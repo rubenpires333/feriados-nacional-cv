@@ -30,6 +30,9 @@ services:
     ports:
       - "${SERVER_PORT:-8083}:8083"
     environment:
+      # Perfil Spring
+      - SPRING_PROFILES_ACTIVE=docker
+      
       # Configurações do Banco
       - DB_HOST=db
       - DB_PORT=5432

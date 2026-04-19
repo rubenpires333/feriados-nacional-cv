@@ -35,8 +35,17 @@ public class OpenApiConfig {
                                 .url("https://opensource.org/licenses/MIT")))
                 .servers(List.of(
                         new Server()
+                                .url("https://public.api.konektadev.cv/feriados-nacionais")
+                                .description("Servidor de Produção"),
+                        new Server()
                                 .url("http://localhost:" + serverPort)
-                                .description("Servidor Local")))
+                                .description("Servidor Local"),
+                        new Server()
+                                .url("http://0.0.0.0:" + serverPort)
+                                .description("Servidor Docker"),
+                        new Server()
+                                .url("/")
+                                .description("Servidor Atual")))
                 .addSecurityItem(new SecurityRequirement().addList("Bearer Authentication"))
                 .components(new io.swagger.v3.oas.models.Components()
                         .addSecuritySchemes("Bearer Authentication",
