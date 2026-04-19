@@ -1,34 +1,60 @@
-# Ignorar arquivos desnecessários no contexto Docker
-target/
-!target/*.jar
+# Arquivos de desenvolvimento
+.env
+.env.local
+.env.example
 *.log
-*.tmp
-.git
-.gitignore
-README.md
-README-Docker.md
-Dockerfile
-.dockerignore
-docker-compose*.yml
+hs_err_*.log
+
+# Diretórios de build
+target/
 .mvn/wrapper/maven-wrapper.jar
 .mvn/wrapper/maven-wrapper.properties
 
-# Arquivos de ambiente
-.env*
-!.env.example
-
 # IDEs
-.idea/
 .vscode/
+.idea/
 *.iml
-*.ipr
 *.iws
+*.ipr
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Docker
+Dockerfile
+docker-compose*.yml
+.dockerignore
+
+# Documentação
+README*.md
+CONTRIBUTING.md
+WORKFLOW.md
+LICENSE
+docs/
+
+# GitHub
+.github/
+
+# Nginx
+nginx/
+
+# Scripts
+*.sh
+
+# Backup e temporários
+backup/
+tmp/
+*.tmp
+*.bak
 
 # OS
 .DS_Store
 Thumbs.db
 
-# Temporary files
+# Logs específicos
+*.out
 *.swp
 *.swo
 *~

@@ -4,21 +4,39 @@ Este guia mostra como executar a API de Feriados Nacionais de Cabo Verde usando 
 
 ## 🚀 Início Rápido
 
-### 1. Clone o repositório
+### Método 1: Script Automático (Recomendado)
+
 ```bash
-git clone https://github.com/rubenpires333/feriados-nacionais-cv.git
-cd feriados-nacionais-cv
+# Clone o repositório
+git clone https://github.com/rubenpires333/feriados-nacional-cv.git
+cd feriados-nacional-cv
+
+# Tornar script executável (Linux/Mac)
+chmod +x docker-start.sh
+
+# Iniciar em modo desenvolvimento
+./docker-start.sh dev
+
+# Ou iniciar em modo produção
+./docker-start.sh prod
 ```
 
-### 2. Configure as variáveis de ambiente
+### Método 2: Docker Compose Manual
+
 ```bash
+# Clone o repositório
+git clone https://github.com/rubenpires333/feriados-nacional-cv.git
+cd feriados-nacional-cv
+
+# Configure as variáveis de ambiente
 cp .env.example .env
-# Edite o arquivo .env com suas configurações
-```
+# Edite o arquivo .env conforme necessário
 
-### 3. Execute com Docker Compose
-```bash
-docker-compose up -d
+# Desenvolvimento
+docker-compose up --build
+
+# Produção
+docker-compose -f docker-compose.prod.yml up --build -d
 ```
 
 A API estará disponível em: http://localhost:8083

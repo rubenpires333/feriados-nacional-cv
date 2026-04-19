@@ -1,8 +1,8 @@
 services:
   # Banco de Dados PostgreSQL
-  postgres:
+  db:
     image: postgres:15-alpine
-    container_name: ${DB_HOST:-postgres-feriados-cv}
+    container_name: postgres-feriados-cv
     environment:
       POSTGRES_DB: ${DB_NAME:-feriados_nacionais}
       POSTGRES_USER: ${DB_USERNAME:-postgres}
@@ -11,46 +11,75 @@ services:
       - "${DB_PORT:-5432}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./docs/cabo-verde-feriados.sql:/docker-entrypoint-initdb.d/init.sql:ro
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-postgres}"]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-postgres} -d ${DB_NAME:-feriados_nacionais}"]
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - feriados-network
 
   # Aplicação Spring Boot
-  feriados-nacionais-cv:
-    build: .
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
     container_name: ${APP_NAME:-feriados-nacionais-cv}
     ports:
-      - "${SERVER_PORT:-8080}:8080"
+      - "${SERVER_PORT:-8083}:8083"
     environment:
-      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE:-docker,dev}
-      - DB_HOST=postgres
-      - DB_PORT=${DB_PORT:-5432}
+      # Configurações do Banco
+      - DB_HOST=db
+      - DB_PORT=5432
       - DB_NAME=${DB_NAME:-feriados_nacionais}
       - DB_USERNAME=${DB_USERNAME:-postgres}
       - DB_PASSWORD=${DB_PASSWORD:-postgres}
-      - JPA_DDL_AUTO=${JPA_DDL_AUTO:-update}
+      
+      # Configurações JPA
+      - JPA_DDL_AUTO=${JPA_DDL_AUTO:-create-drop}
       - JPA_SHOW_SQL=${JPA_SHOW_SQL:-true}
+      
+      # Configurações de Log
       - LOG_LEVEL_ROOT=${LOG_LEVEL_ROOT:-INFO}
       - LOG_LEVEL_APP=${LOG_LEVEL_APP:-DEBUG}
       - LOG_LEVEL_SPRING=${LOG_LEVEL_SPRING:-INFO}
       - LOG_LEVEL_HIBERNATE=${LOG_LEVEL_HIBERNATE:-DEBUG}
-      - DEVTOOLS_RESTART_ENABLED=${DEVTOOLS_RESTART_ENABLED:-true}
-      - DEVTOOLS_LIVERELOAD_ENABLED=${DEVTOOLS_LIVERELOAD_ENABLED:-true}
-      - JWT_SECRET=${JWT_SECRET:-default-secret-key}
+      
+      # Configurações de Segurança
+      - JWT_SECRET=${JWT_SECRET:-5be86359073c434bad2da3932222dabe}
       - JWT_EXPIRATION=${JWT_EXPIRATION:-86400000}
-      - SPRINGDOC_SWAGGER_UI_ENABLED=${SWAGGER_ENABLED:-true}
-      - MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE=${MANAGEMENT_ENDPOINTS_ENABLED:-health,info,metrics}
-    volumes:
-      # Hot reload - montar código fonte
-      - ./src:/app/src
-      - ./pom.xml:/app/pom.xml
+      - API_TOKEN=${API_TOKEN:-eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6IjU5NTI2NTdhMzg1YzQ1YjJkODBmMDAxYzU1YjNjNzU5In0.eyJpc3MiOiJodHRwczovL2ZlcmlhZG9zLW5hY2lvbmFsLmtvbmVrdGFkZXYuY3YiLCJhdWQiOiJrb25la3RhRGV2Iiwic3ViIjoiNWJlODYzNTkwNzNjNDM0YmFkMmRhMzkzMjIyMmRhYmUiLCJleHAiOjE3NzY2MDg1MTksImlhdCI6MTc3NjYwODIxOX0.DNMqOA4YtPdy-I08Bl9wZ-R1qaseYtjAksXgbl8DD07ZKmJafy7R26TkaSYN0QxF5TB3Riv3KZIr_djtrpvGLg}
+      
+      # Configurações do Swagger
+      - SWAGGER_ENABLED=${SWAGGER_ENABLED:-true}
+      
+      # Configurações do Actuator
+      - MANAGEMENT_ENDPOINTS_ENABLED=${MANAGEMENT_ENDPOINTS_ENABLED:-health,info,metrics}
+      
+      # Configurações da Aplicação
+      - APP_NAME=${APP_NAME:-feriados-nacionais-cv}
+      - APP_VERSION=${APP_VERSION:-1.0.0}
+      - SERVER_PORT=8083
+      
     depends_on:
-      postgres:
+      db:
         condition: service_healthy
     restart: unless-stopped
+    networks:
+      - feriados-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8083/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
 
 volumes:
   postgres_data:
+    driver: local
+
+networks:
+  feriados-network:
+    driver: bridge
