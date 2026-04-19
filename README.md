@@ -127,19 +127,19 @@ Todos os endpoints da API requerem autenticação por token, exceto a documenta�
 #### Opção 1: Header Authorization
 ```bash
 curl -H "Authorization: Bearer SEU_TOKEN" \
-     "http://localhost:8083/api/v1/feriados/2024"
+     "http://localhost:8083/api/v1/feriados/2026"
 ```
 
 #### Opção 2: Query Parameter
 ```bash
-curl "http://localhost:8083/api/v1/feriados/2024?token=SEU_TOKEN"
+curl "http://localhost:8083/api/v1/feriados/2026?token=SEU_TOKEN"
 ```
 
 ### Exemplos de Uso
 
-#### Listar feriados de 2024
+#### Listar feriados de 2026
 ```bash
-GET /api/v1/feriados/2024
+GET /api/v1/feriados/2026
 ```
 
 #### Verificar feriado de hoje
@@ -154,7 +154,7 @@ GET /api/v1/feriados/proximo
 
 #### Feriados de um município específico
 ```bash
-GET /api/v1/feriados/2024?municipio=PRA
+GET /api/v1/feriados/2026?municipio=PRA
 ```
 
 #### Lista de ilhas
@@ -167,7 +167,7 @@ GET /api/v1/ilhas
 ```json
 {
   "nome": "Dia da Independência",
-  "data": "2024-07-05",
+  "data": "2026-07-05",
   "diaSemana": "Sexta-feira",
   "categoria": "CIVIL",
   "tipo": "NACIONAL",
@@ -197,9 +197,25 @@ GET /api/v1/ilhas
 
 ## 🤝 Como Contribuir
 
-Agradecemos sua contribuição para manter esta API atualizada e completa! Existem várias formas de ajudar:
+Agradecemos sua contribuição para manter esta API atualizada e completa! 
 
-### 1. Reportar Feriados em Falta
+### 🔄 Fluxo de Contribuição
+
+Este projeto usa um fluxo de desenvolvimento com duas branches principais:
+
+- **`main`** 🔒 - Branch de produção (protegida, apenas maintainers)
+- **`develop`** 🚧 - Branch de desenvolvimento (base para PRs)
+
+**📋 Processo Resumido:**
+1. Fork do repositório
+2. Criar branch a partir de `develop`
+3. Fazer alterações e testar
+4. Abrir Pull Request para `develop`
+5. Aguardar revisão e aprovação
+
+**📚 Documentação Completa:** Veja [WORKFLOW.md](WORKFLOW.md) para instruções detalhadas.
+
+### 🗓 Reportar Feriados em Falta
 
 Se você conhece feriados que não estão na API, abra uma **Issue** com:
 
@@ -211,7 +227,7 @@ Se você conhece feriados que não estão na API, abra uma **Issue** com:
 - Decreto ou fonte oficial (se disponível)
 - Descrição breve
 
-### 2. Corrigir Informações
+### 🔧 Corrigir Informações
 
 Se encontrar dados incorretos:
 
@@ -219,13 +235,16 @@ Se encontrar dados incorretos:
 - Inclua a fonte correta da informação
 - Sugira a correção necessária
 
-### 3. Melhorar o Código
+### 💻 Melhorar o Código
 
-- Faça um **Fork** do projeto
-- Crie uma **branch** para sua feature (`git checkout -b feature/nova-funcionalidade`)
-- Faça **commit** das mudanças (`git commit -m 'Adiciona nova funcionalidade'`)
-- Faça **push** para a branch (`git push origin feature/nova-funcionalidade`)
-- Abra um **Pull Request**
+**📋 Processo:**
+1. **Fork** do projeto
+2. Crie uma **branch** a partir de `develop`: `git checkout -b feature/nova-funcionalidade`
+3. Faça **commit** das mudanças: `git commit -m 'Adiciona nova funcionalidade'`
+4. Faça **push** para a branch: `git push origin feature/nova-funcionalidade`
+5. Abra um **Pull Request** para a branch `develop`
+
+**⚠️ Importante:** Sempre abra PRs para `develop`, nunca diretamente para `main`!
 
 ## 📅 Adicionando Novos Feriados
 
@@ -366,10 +385,8 @@ Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICE
 
 - **Issues**: Use o sistema de Issues do GitHub
 - **Discussões**: Use as Discussions para dúvidas gerais
-- **Email**: [seu-email@exemplo.com]
+- **Email**: [rubenpires333@gmail.com]
 
 ---
-
-**Feito com ❤️ para a comunidade cabo-verdiana**
 
 *Ajude-nos a manter esta API completa e atualizada!*
