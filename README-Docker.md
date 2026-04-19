@@ -41,6 +41,25 @@ docker-compose -f docker-compose.prod.yml up --build -d
 
 A API estará disponível em: http://localhost:8083
 
+### 🗃️ **Dados Iniciais Automáticos**
+
+A aplicação carrega automaticamente:
+- ✅ **10 ilhas** de Cabo Verde
+- ✅ **22 municípios** com códigos oficiais
+- ✅ **50+ santos** padroeiros e religiosos
+- ✅ **80+ feriados** (nacionais, municipais, tradicionais)
+- ✅ **Feriados móveis** calculados automaticamente (Páscoa, Carnaval, etc.)
+
+**📊 Verificar dados carregados:**
+```bash
+# Ver logs do carregamento
+docker-compose logs app | grep "📊"
+
+# Testar endpoints
+curl -H "Authorization: Bearer SEU_TOKEN" http://localhost:8083/api/v1/ilhas
+curl -H "Authorization: Bearer SEU_TOKEN" http://localhost:8083/api/v1/feriados/2024
+```
+
 ## 📋 Serviços Incluídos
 
 ### API (Porta 8083)

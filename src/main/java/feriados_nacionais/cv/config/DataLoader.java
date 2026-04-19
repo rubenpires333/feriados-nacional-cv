@@ -23,20 +23,37 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        System.out.println("🔍 Verificando estado da base de dados...");
+        
         if (feriadoRepository.count() > 0) {
-            System.out.println("✓ Dados já existem na base de dados. Carregamento ignorado.");
+            System.out.println("✅ Dados já existem na base de dados. Carregamento ignorado.");
+            printDataSummary();
             return;
         }
+        
+        System.out.println("📊 Base de dados vazia. Iniciando carregamento de dados...");
         System.out.println("🔄 Carregando dados completos de feriados de Cabo Verde...");
-        loadCaboVerdeHolidaysData();
-        System.out.println("✅ Dados de feriados de Cabo Verde carregados com sucesso!");
-        System.out.println("📊 Resumo dos dados carregados:");
-        System.out.println("   - Santos: "                  + santoRepository.count());
-        System.out.println("   - Ilhas: "                   + ilhaRepository.count());
-        System.out.println("   - Municípios: "              + municipioRepository.count());
-        System.out.println("   - Feriados: "                + feriadoRepository.count());
-        System.out.println("   - Abrangências: "            + feriadoAbrangenciaRepository.count());
+        
+        try {
+            loadCaboVerdeHolidaysData();
+            System.out.println("✅ Dados de feriados de Cabo Verde carregados com sucesso!");
+            printDataSummary();
+        } catch (Exception e) {
+            System.err.println("❌ Erro ao carregar dados: " + e.getMessage());
+            e.printStackTrace();
+            throw e;
+        }
+    }
+    
+    private void printDataSummary() {
+        System.out.println("📊 Resumo dos dados na base:");
+        System.out.println("   - Santos: "                     + santoRepository.count());
+        System.out.println("   - Ilhas: "                      + ilhaRepository.count());
+        System.out.println("   - Municípios: "                 + municipioRepository.count());
+        System.out.println("   - Feriados: "                   + feriadoRepository.count());
+        System.out.println("   - Abrangências: "               + feriadoAbrangenciaRepository.count());
         System.out.println("   - Ocorrências Extraordinárias: " + ocorrenciaExtraordinariaRepository.count());
+        System.out.println("🚀 API pronta para uso!");
     }
 
     private void loadCaboVerdeHolidaysData() {
