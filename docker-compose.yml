@@ -63,10 +63,6 @@ services:
       - APP_VERSION=${APP_VERSION:-1.0.0}
       - SERVER_PORT=8083
       
-      # Aguardar banco estar pronto
-      - SPRING_DATASOURCE_HIKARI_INITIALIZATION_FAIL_TIMEOUT=60000
-      - SPRING_DATASOURCE_HIKARI_CONNECTION_TIMEOUT=60000
-      
     depends_on:
       db:
         condition: service_healthy
