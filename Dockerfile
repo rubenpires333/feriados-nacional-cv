@@ -3,13 +3,20 @@ FROM maven:3.9.6-eclipse-temurin-21-alpine AS builder
 
 WORKDIR /app
 
-# Copiar pom.xml primeiro para cache de dependências
+# Copiar arquivos de configuração Maven
 COPY pom.xml .
-RUN mvn dependency:go-offline -B
+COPY mvnw .
+COPY mvnw.cmd .
+COPY .mvn .mvn
 
-# Copiar código fonte e compilar
+# Resolver dependências (cache layer)
+RUN mvn dependency:go-offline -B || true
+
+# Copiar código fonte
 COPY src src
-RUN mvn clean package -DskipTests
+
+# Compilar aplicação
+RUN mvn clean package -DskipTests -B
 
 # Imagem final otimizada
 FROM eclipse-temurin:21-jre-alpine
