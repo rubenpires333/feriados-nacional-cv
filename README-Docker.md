@@ -6,7 +6,7 @@ Este guia mostra como executar a API de Feriados Nacionais de Cabo Verde usando 
 
 ### 1. Clone o repositório
 ```bash
-git clone https://github.com/seu-usuario/feriados-nacionais-cv.git
+git clone https://github.com/rubenpires333/feriados-nacionais-cv.git
 cd feriados-nacionais-cv
 ```
 

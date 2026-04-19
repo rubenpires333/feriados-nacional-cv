@@ -63,7 +63,7 @@ Esta API fornece informações completas sobre os feriados de Cabo Verde, inclui
 ### 1. Clone o repositório
 
 ```bash
-git clone https://github.com/seu-usuario/feriados-nacionais-cv.git
+git clone https://github.com/rubenpires333/feriados-nacionais-cv.git
 cd feriados-nacionais-cv
 ```
 
