@@ -1,0 +1,30 @@
+services:
+  # Aplicação Spring Boot
+  feriados-nacionais-cv:
+    build: .
+    container_name: ${APP_NAME:-feriados-nacionais-cv}-prod
+    ports:
+      - "${SERVER_PORT:-8080}:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE:-prod}
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://${DB_HOST}:${DB_PORT:-5432}/${DB_NAME}
+      - SPRING_DATASOURCE_USERNAME=${DB_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=${JPA_DDL_AUTO:-validate}
+      - SPRING_JPA_SHOW_SQL=${JPA_SHOW_SQL:-false}
+      - LOGGING_LEVEL_ROOT=${LOG_LEVEL_ROOT:-WARN}
+      - LOGGING_LEVEL_FERIADOS_NACIONAIS_CV=${LOG_LEVEL_APP:-INFO}
+      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK=${LOG_LEVEL_SPRING:-WARN}
+      - LOGGING_LEVEL_ORG_HIBERNATE=${LOG_LEVEL_HIBERNATE:-ERROR}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRATION=${JWT_EXPIRATION:-86400000}
+      - SPRINGDOC_SWAGGER_UI_ENABLED=${SWAGGER_ENABLED:-false}
+      - MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE=${MANAGEMENT_ENDPOINTS_ENABLED:-health,info}
+      - JAVA_OPTS=-Xmx512m -Xms256m
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 768M
+        reservations:
+          memory: 256M
