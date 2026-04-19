@@ -67,10 +67,11 @@ curl -H "Authorization: Bearer SEU_TOKEN" http://localhost:8083/api/v1/feriados/
 - Swagger UI: http://localhost:8083/swagger-ui.html
 - Health check: http://localhost:8083/actuator/health
 
-### PostgreSQL (Porta 5432)
+### PostgreSQL (Porta 5433)
 - Banco de dados com dados iniciais
 - Usuário: postgres
 - Senha: postgres (configurável no .env)
+- **Porta alterada para 5433** para evitar conflito com PostgreSQL local
 
 ## 🔧 Comandos Úteis
 

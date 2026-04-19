@@ -20,11 +20,12 @@ fi
 # Função para desenvolvimento
 start_dev() {
     echo "🚀 Iniciando em modo DESENVOLVIMENTO..."
-    echo "📋 Serviços: PostgreSQL + Spring Boot"
+    echo "📋 Serviços: PostgreSQL (porta 5433) + Spring Boot"
     echo "🔗 URLs:"
     echo "   - API: http://localhost:8083"
     echo "   - Swagger: http://localhost:8083/swagger-ui.html"
     echo "   - Health: http://localhost:8083/actuator/health"
+    echo "   - PostgreSQL: localhost:5433"
     echo ""
     
     # Parar containers existentes
@@ -37,10 +38,11 @@ start_dev() {
 # Função para produção
 start_prod() {
     echo "🏭 Iniciando em modo PRODUÇÃO..."
-    echo "📋 Serviços: PostgreSQL + Spring Boot + Nginx"
+    echo "📋 Serviços: PostgreSQL (porta 5433) + Spring Boot + Nginx"
     echo "🔗 URLs:"
     echo "   - API: https://localhost (via Nginx)"
     echo "   - Health: https://localhost/health"
+    echo "   - PostgreSQL: localhost:5433"
     echo ""
     
     # Verificar variáveis obrigatórias para produção

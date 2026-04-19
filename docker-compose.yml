@@ -8,7 +8,7 @@ services:
       POSTGRES_USER: ${DB_USERNAME:-postgres}
       POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
     ports:
-      - "${DB_PORT:-5432}:5432"
+      - "5433:5432"  # Porta externa 5433 para evitar conflito
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./docs/cabo-verde-feriados.sql:/docker-entrypoint-initdb.d/init.sql:ro
