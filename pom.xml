@@ -29,17 +29,6 @@
 	<properties>
 		<java.version>21</java.version>
 	</properties>
-	
-	<profiles>
-		<!-- Profile para Docker - exclui dependências problemáticas -->
-		<profile>
-			<id>docker</id>
-			<properties>
-				<excludeDevtools>true</excludeDevtools>
-				<excludeDockerCompose>true</excludeDockerCompose>
-			</properties>
-		</profile>
-	</profiles>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

@@ -30,9 +30,6 @@ services:
     ports:
       - "${SERVER_PORT:-8083}:8083"
     environment:
-      # Profile Docker
-      - SPRING_PROFILES_ACTIVE=docker
-      
       # Configurações do Banco
       - DB_HOST=db
       - DB_PORT=5432
@@ -42,12 +39,24 @@ services:
       
       # Configurações JPA
       - JPA_DDL_AUTO=${JPA_DDL_AUTO:-create-drop}
-      - JPA_SHOW_SQL=${JPA_SHOW_SQL:-false}
+      - JPA_SHOW_SQL=${JPA_SHOW_SQL:-true}
+      
+      # Configurações de Log
+      - LOG_LEVEL_ROOT=${LOG_LEVEL_ROOT:-WARN}
+      - LOG_LEVEL_APP=${LOG_LEVEL_APP:-INFO}
+      - LOG_LEVEL_SPRING=${LOG_LEVEL_SPRING:-WARN}
+      - LOG_LEVEL_HIBERNATE=${LOG_LEVEL_HIBERNATE:-WARN}
       
       # Configurações de Segurança
       - JWT_SECRET=${JWT_SECRET:-5be86359073c434bad2da3932222dabe}
       - JWT_EXPIRATION=${JWT_EXPIRATION:-86400000}
       - API_TOKEN=${API_TOKEN:-eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6IjU5NTI2NTdhMzg1YzQ1YjJkODBmMDAxYzU1YjNjNzU5In0.eyJpc3MiOiJodHRwczovL2ZlcmlhZG9zLW5hY2lvbmFsLmtvbmVrdGFkZXYuY3YiLCJhdWQiOiJrb25la3RhRGV2Iiwic3ViIjoiNWJlODYzNTkwNzNjNDM0YmFkMmRhMzkzMjIyMmRhYmUiLCJleHAiOjE3NzY2MDg1MTksImlhdCI6MTc3NjYwODIxOX0.DNMqOA4YtPdy-I08Bl9wZ-R1qaseYtjAksXgbl8DD07ZKmJafy7R26TkaSYN0QxF5TB3Riv3KZIr_djtrpvGLg}
+      
+      # Configurações do Swagger
+      - SWAGGER_ENABLED=${SWAGGER_ENABLED:-true}
+      
+      # Configurações do Actuator
+      - MANAGEMENT_ENDPOINTS_ENABLED=${MANAGEMENT_ENDPOINTS_ENABLED:-health,info,metrics}
       
       # Configurações da Aplicação
       - APP_NAME=${APP_NAME:-feriados-nacionais-cv}
