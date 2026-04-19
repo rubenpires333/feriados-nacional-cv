@@ -16,32 +16,27 @@ import java.util.List;
 @Configuration
 public class OpenApiConfig {
 
-    @Value("${server.port:8080}")
+    @Value("${server.port:8083}")
     private String serverPort;
 
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("Feriados Nacionais CV API")
-                        .description("API REST para gerenciamento de feriados nacionais de Cabo Verde. " +
-                                   "Esta API permite consultar, criar, atualizar e deletar informações sobre " +
-                                   "feriados nacionais, incluindo datas, descrições e tipos de feriados.")
+                        .title("🇨🇻 Feriados Nacionais CV API")
+                        .description("API REST para consulta de feriados nacionais de Cabo Verde. " +
+                                   "Inclui feriados nacionais, municipais, tradicionais e móveis (baseados na Páscoa).")
                         .version("1.0.0")
                         .contact(new Contact()
-                                .name("Equipe de Desenvolvimento")
-                                .email("rubenpires333@gmail.com")
-                                .url("https://github.com/rubenpires333/feriados-cv"))
+                                .name("Feriados Nacionales de Cabo Verde - API REST")
+                                .email("rubenpires333@gmail.com"))
                         .license(new License()
                                 .name("MIT License")
                                 .url("https://opensource.org/licenses/MIT")))
                 .servers(List.of(
                         new Server()
                                 .url("http://localhost:" + serverPort)
-                                .description("Servidor de Desenvolvimento"),
-                        new Server()
-                                .url("https://feriados-nacional.konektadev.cv")
-                                .description("Servidor de Produção")))
+                                .description("Servidor Local")))
                 .addSecurityItem(new SecurityRequirement().addList("Bearer Authentication"))
                 .components(new io.swagger.v3.oas.models.Components()
                         .addSecuritySchemes("Bearer Authentication",
@@ -49,6 +44,6 @@ public class OpenApiConfig {
                                         .type(SecurityScheme.Type.HTTP)
                                         .scheme("bearer")
                                         .bearerFormat("JWT")
-                                        .description("Token JWT para autenticação")));
+                                        .description("Token JWT para autenticação. Use o token do arquivo .env")));
     }
 }

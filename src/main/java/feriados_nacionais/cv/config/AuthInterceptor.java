@@ -3,7 +3,6 @@ package feriados_nacionais.cv.config;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.core.env.Environment;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -47,7 +46,10 @@ public class AuthInterceptor implements HandlerInterceptor {
         String requestURI = request.getRequestURI();
         if (requestURI.startsWith("/swagger-ui") || 
             requestURI.startsWith("/v3/api-docs") || 
-            requestURI.startsWith("/actuator")) {
+            requestURI.startsWith("/actuator") ||
+            requestURI.equals("/swagger-ui.html") ||
+            requestURI.startsWith("/webjars/") ||
+            requestURI.startsWith("/swagger-resources")) {
             return true;
         }
 
